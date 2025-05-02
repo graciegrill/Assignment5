@@ -10,6 +10,10 @@ import java.util.ArrayList;
 public class Dijkstra {
     private static double INFINITY = Double.MAX_VALUE;
     private static double EPSILON  = 0.000001;
+    private ArrayList<Integer> visited = new ArrayList<Integer>();
+    private boolean[] inPQ;
+
+
 
     private EuclideanGraph G;
     private double[] dist;
@@ -49,7 +53,7 @@ public class Dijkstra {
 
     // Dijkstra's algorithm to find shortest path from s to d
     private void dijkstra(int s, int d) {
-        ArrayList<Integer> visited = new ArrayList<Integer>();
+        visited.clear();
         int V = G.V();
 
         // initialize
@@ -65,14 +69,13 @@ public class Dijkstra {
                 pred[v] = -1;
             }
         }
-        visited.clear();
 
         // priority queue
         IndexPQ pq = new IndexPQ(V);
         for (int v = 0; v < V; v++) pq.insert(v, dist[v]);
 
         // set distance of source
-        dist[s] = 0.0;
+        dist[s] = G.distance(s, d);
         pred[s] = s;
         pq.change(s, dist[s]);
         //add source to visited
@@ -94,7 +97,7 @@ public class Dijkstra {
                 if (dist[v] + G.distance(v, w) < dist[w] - EPSILON) {
                     //adding to visited to handle reinitialization
                     if (!visited.contains(w)) visited.add(w);
-                    dist[w] = dist[v] + G.distance(v, w);
+                    dist[w] = dist[v] + G.distance(v, w)+G.distance(w,d) - G.distance(v,d);
                     pq.change(w, dist[w]);
                     pred[w] = v;
                     //// System.out.println("    lower " + w + " to " + dist[w]);
@@ -103,6 +106,5 @@ public class Dijkstra {
         }
     
     }
-
 
 }
