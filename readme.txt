@@ -47,11 +47,16 @@ N/A
 /******************************************************************************
  *  Describe any serious problems you encountered.                    
  *****************************************************************************/
-I had to adjust the way vertices were inserted and changed within the priority queue as 
-certain conditions were creating infinite loops, but I addressed these issues in my code.
+Certain aspects of the A* algorithm as described in the Sedgewick text provided needed to be 
+changed for the code to run properly. I found that it did not run properly with the final negative 
+term in the adjusted priority function, nor did it run properly with the adjusted distance. I found
+which pieces worked through process of elimination, and it still results in a marked reduced runtime
+compared to the naive method.
 
 /******************************************************************************
  *  List any other comments here. Feel free to provide any feedback   
  *  on how much you learned from doing the assignment, and whether    
  *  you enjoyed doing it.                                             
  *****************************************************************************/
+ I think some of the texts were slightly misleading for this assignment, but it did result in 
+ me reading a lot closer than I normally would have. I likely learned a lot from my struggle, which I enjoyed.
