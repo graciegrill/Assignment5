@@ -11,8 +11,6 @@ public class Dijkstra {
     private static double INFINITY = Double.MAX_VALUE;
     private static double EPSILON  = 0.000001;
     private ArrayList<Integer> visited = new ArrayList<Integer>();
-    private boolean[] inPQ;
-
 
 
     private EuclideanGraph G;
@@ -21,6 +19,13 @@ public class Dijkstra {
 
     public Dijkstra(EuclideanGraph G) {
         this.G = G;
+    int V = G.V();
+    dist = new double[V];
+    pred = new int[V];
+    for (int v = 0; v < V; v++) {
+        dist[v] = INFINITY;
+        pred[v] = -1;
+    }
     }
 
     // return shortest path distance from s to d
@@ -53,7 +58,7 @@ public class Dijkstra {
 
     // Dijkstra's algorithm to find shortest path from s to d
     private void dijkstra(int s, int d) {
-        visited.clear();
+        //tracking visited vertices
         int V = G.V();
 
         // initialize
@@ -69,15 +74,17 @@ public class Dijkstra {
                 pred[v] = -1;
             }
         }
+        //clears visited
+        visited.clear();
 
-        // priority queue
-        IndexPQ pq = new IndexPQ(V);
-        for (int v = 0; v < V; v++) pq.insert(v, dist[v]);
+        // priority queue changed using binary heap
+        IndexMinPQ<Double> pq = new IndexMinPQ<Double>(V);
 
         // set distance of source
-        dist[s] = G.distance(s, d);
+        dist[s] = G.distance(s, d); //changed accord to section 21.5
         pred[s] = s;
-        pq.change(s, dist[s]);
+        //only inserting source to start
+        pq.insert(s, dist[s]);
         //add source to visited
         visited.add(s);
 
@@ -96,15 +103,20 @@ public class Dijkstra {
                 int w = i.next();
                 if (dist[v] + G.distance(v, w) < dist[w] - EPSILON) {
                     //adding to visited to handle reinitialization
-                    if (!visited.contains(w)) visited.add(w);
-                    dist[w] = dist[v] + G.distance(v, w)+G.distance(w,d) - G.distance(v,d);
-                    pq.change(w, dist[w]);
+                    dist[w] = dist[v] + G.distance(v, w)-G.distance(v,d);
                     pred[w] = v;
+                    //only inserted if not in the PQ
+                    if (pq.contains(w)) {
+                        pq.changeKey(w, dist[w]);
+                    } else {
+                        pq.insert(w, dist[w]);
+                    }
+                    //adding to visited
+                    visited.add(w);
+    
                     //// System.out.println("    lower " + w + " to " + dist[w]);
                 }
             }
         }
     
-    }
-
-}
+    }}

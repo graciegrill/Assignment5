@@ -10,7 +10,7 @@
  ****************************************************************************/
 
 
-public class Paths {
+ public class Paths {
 
     public static void main(String[] args) {
 
