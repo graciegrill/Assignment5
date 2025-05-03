@@ -11,8 +11,32 @@
  
  
   public class Paths {
+    public static class Stopwatch { 
+
+        private final long start;
+    
+        /**
+         * Initializes a new stopwatch.
+         */
+        public Stopwatch() {
+            start = System.currentTimeMillis();
+        } 
+    
+    
+        /**
+         * Returns the elapsed CPU time (in seconds) since the stopwatch was created.
+         *
+         * @return elapsed CPU time (in seconds) since the stopwatch was created
+         */
+        public double elapsedTime() {
+            long now = System.currentTimeMillis();
+            return (now - start) / 1000.0;
+        }
+    
+    } 
  
     public static void main(String[] args) {
+        Stopwatch timer = new Stopwatch();
 
         // read in the graph from a file
         In graphin = new In(args[0]);
@@ -28,5 +52,8 @@
             dijkstra.showPath(s, d);
             System.out.println();
         }
+        double time = timer.elapsedTime();
+        System.out.println(time+" seconds have elapsed");
+        System.out.println(dijkstra.returnAverage()+" average vertices have been examined per call");
     }
 }

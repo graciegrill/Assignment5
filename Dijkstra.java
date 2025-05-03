@@ -11,6 +11,8 @@ public class Dijkstra {
     private static double INFINITY = Double.MAX_VALUE;
     private static double EPSILON  = 0.000001;
     private ArrayList<Integer> visited = new ArrayList<Integer>();
+    private int runs = 0;
+    private int examined = 0;
 
 
     private EuclideanGraph G;
@@ -55,9 +57,13 @@ public class Dijkstra {
             G.point(v).drawTo(G.point(pred[v]));
         Turtle.render();
     }
+    public double returnAverage(){
+        return examined/runs *1.0;
+    }
 
     // Dijkstra's algorithm to find shortest path from s to d
     private void dijkstra(int s, int d) {
+        int vertices = 0;
         //tracking visited vertices
         int V = G.V();
 
@@ -75,11 +81,11 @@ public class Dijkstra {
         visited.add(s);
         
 
-        // priority queue changed using binary heap
+        // priority queue
         IndexPQ pq = new IndexPQ(V);
 
         // set distance of source
-        dist[s] = 0.0; //changed accord to section 21.5
+        dist[s] = 0.0; //changed accord to section 21.5 -- changed back because introduced error
         pred[s] = s;
         //clears visited
         visited.clear();
@@ -92,6 +98,8 @@ public class Dijkstra {
         while (!pq.isEmpty()) {
 
             int v = pq.delMin();
+            vertices++;
+
             //// System.out.println("process " + v + " " + dist[v]);
             /// Change 1, Part 1: stopping if we have found shortest path
             if(v == d) break;
@@ -104,9 +112,9 @@ public class Dijkstra {
                 int w = i.next();
                 if (dist[v] + G.distance(v, w) < dist[w] - EPSILON) {
                     //adding to visited to handle reinitialization
-                    dist[w] = dist[v] + G.distance(v, w);
+                    dist[w] = dist[v] + G.distance(v, w); //had to eliminate subtraction because it also introduced an error
                     pred[w] = v;
-                    //only inserted if not in the PQ
+                    //only inserted if not in the PQ; changed otherwise
                     if (pq.contains(w)) {
                         pq.change(w, dist[w]);
                     } else {
@@ -119,5 +127,7 @@ public class Dijkstra {
                 }
             }
         }
+        runs++;
+        examined+=vertices;
     
     }}

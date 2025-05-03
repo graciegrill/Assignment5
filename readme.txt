@@ -18,8 +18,7 @@ A*. For this, I initialized the wt[s] at the beginning of the algorithm to dista
 0.0 and changed the priority to dist[w] = dist[v] + G.distance(v, w)-G.distance(v,d) as suggested in the
 Sedgewick text. I then added a stopping condition if v == d, in which case a path had been found.
 I also created a visited arraylist to add visited vertices and then only re-initialize those vertices
-that had been changed. Finally, I changed the priority queue to a IndexMinPQ from a Sedgewick text at
-the suggestion of the project description.
+that had been changed.
 
 /******************************************************************************
  *  Which input files did you use to test your program? Mark the
@@ -31,15 +30,15 @@ the suggestion of the project description.
 
 Input file                Running Time (seconds)     Vertices    Agreed?
 ------------------------------------------------------------------------
-usa-1000long.txt
-usa-5000short.txt
-usa-50000short.txt
+usa-1000long.txt            20.786                     44537.0  Yes
+usa-5000short.txt           11.83                       2466.0  Yes
+usa-50000short.txt          76.43                       2488.0  Yes
 
 
 /******************************************************************************
  *  Known bugs / limitations.
  *****************************************************************************/
-
+All bugs should have been resolved to the best of my knowledge.
 /******************************************************************************
  *  List whatever help (if any) that you received.
  *****************************************************************************/
