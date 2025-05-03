@@ -61,28 +61,28 @@ public class Dijkstra {
         //tracking visited vertices
         int V = G.V();
 
-        // initialize
-        dist = new double[V];
-        pred = new int[V];
-        //only reinitializing things that changed in previous query
-        if (visited.isEmpty()) {
-            for (int v = 0; v < V; v++) dist[v] = INFINITY;
-            for (int v = 0; v < V; v++) pred[v] = -1;
-        } else {
-            for (int v : visited) {
-                dist[v] = INFINITY;
-                pred[v] = -1;
-            }
+        for (int v : visited) {
+            dist[v] = INFINITY;
+            pred[v] = -1;
         }
-        //clears visited
+        //reset source node
+        dist[s] = 0.0;
+        pred[s] = s;
+        
+        // clear visited
         visited.clear();
+        //add source node
+        visited.add(s);
+        
 
         // priority queue changed using binary heap
-        IndexMinPQ<Double> pq = new IndexMinPQ<Double>(V);
+        IndexPQ pq = new IndexPQ(V);
 
         // set distance of source
-        dist[s] = G.distance(s, d); //changed accord to section 21.5
+        dist[s] = 0.0; //changed accord to section 21.5
         pred[s] = s;
+        //clears visited
+        visited.clear();
         //only inserting source to start
         pq.insert(s, dist[s]);
         //add source to visited
@@ -90,12 +90,13 @@ public class Dijkstra {
 
         // run Dijkstra's algorithm
         while (!pq.isEmpty()) {
+
             int v = pq.delMin();
             //// System.out.println("process " + v + " " + dist[v]);
             /// Change 1, Part 1: stopping if we have found shortest path
             if(v == d) break;
             // v not reachable from s so stop
-            if (pred[v] == -1) break;
+            //if (pred[v] == -1) break;
 
             // scan through all nodes w adjacent to v
             IntIterator i = G.neighbors(v);
@@ -103,11 +104,11 @@ public class Dijkstra {
                 int w = i.next();
                 if (dist[v] + G.distance(v, w) < dist[w] - EPSILON) {
                     //adding to visited to handle reinitialization
-                    dist[w] = dist[v] + G.distance(v, w)-G.distance(v,d);
+                    dist[w] = dist[v] + G.distance(v, w);
                     pred[w] = v;
                     //only inserted if not in the PQ
                     if (pq.contains(w)) {
-                        pq.changeKey(w, dist[w]);
+                        pq.change(w, dist[w]);
                     } else {
                         pq.insert(w, dist[w]);
                     }

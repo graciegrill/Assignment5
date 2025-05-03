@@ -1,17 +1,17 @@
 /*************************************************************************
- *  Compilation:  javac Paths.java
- *  Execution:    java Paths file < input.txt
- *  Dependencies: EuclideanGraph.java Dijkstra.java In.java StdIn.java
- *
- *  Reads in a map from a file, and repeatedly reads in two integers s
- *  and d from standard input, and prints the shortest path from s
- *  to d to standard output.
- *
- ****************************************************************************/
-
-
- public class Paths {
-
+  *  Compilation:  javac Paths.java
+  *  Execution:    java Paths file < input.txt
+  *  Dependencies: EuclideanGraph.java Dijkstra.java In.java StdIn.java
+  *
+  *  Reads in a map from a file, and repeatedly reads in two integers s
+  *  and d from standard input, and prints the shortest path from s
+  *  to d to standard output.
+  *
+  ****************************************************************************/
+ 
+ 
+  public class Paths {
+ 
     public static void main(String[] args) {
 
         // read in the graph from a file

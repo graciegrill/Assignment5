@@ -47,6 +47,9 @@ public class IndexPQ {
         fixDown(pq, qp[k], N);
     }
 
+    public boolean contains(int k) {
+        return qp[k] > 0 || pq[1] == k;
+    }
 
    /**************************************************************
     * General helper functions
